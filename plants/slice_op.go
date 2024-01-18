@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []IAlbum) uint32 {
+func CalculateAgeSum(collection []IPlant) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,7 +28,7 @@ func CalculateAgeSum(collection []IAlbum) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []IAlbum) (float64, error) {
+func CalculateAgeAvg(collection []IPlant) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,7 +38,7 @@ func CalculateAgeAvg(collection []IAlbum) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IAlbum, instance IAlbum) bool {
+func TryAddUniqueInstance(collection *[]IPlant, instance IPlant) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса

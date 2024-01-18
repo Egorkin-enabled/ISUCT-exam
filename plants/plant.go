@@ -1,6 +1,6 @@
 package albums
 
-// Объявление структуры 'Альбом'
+// Объявление структуры 'Растение'
 
 import "fmt"
 
@@ -10,23 +10,23 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1900
+	minValue uint32 = 1700
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type album struct {
-	name   string
-	age    uint32
-	artist string
+type plant struct {
+	name string
+	age  uint32
+	kind string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IAlbum interface {
+type IPlant interface {
 	// Геттеры
-	GetArtist() string
+	GetKind() string
 	GetName() string
 	GetAge() uint32
 
@@ -36,9 +36,9 @@ type IAlbum interface {
 }
 
 // Реализация конструктора
-func NewAlbum(name string, age uint32) (IAlbum, error) {
+func NewPlant(name string, age uint32) (IPlant, error) {
 	// Создаём пустой экземпляр.
-	instance := album{}
+	instance := plant{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,28 +55,30 @@ func NewAlbum(name string, age uint32) (IAlbum, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance album) GetArtist() string {
-	return instance.artist
+func (instance plant) GetKind() string {
+	return instance.kind
 }
 
-func (instance album) GetName() string {
+func (instance plant) GetName() string {
 	return instance.name
 }
 
-func (instance album) GetAge() uint32 {
+func (instance plant) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *album) SetName(name string) error {
+func (instance *plant) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.artist = "Artist A"
+		instance.kind = "CumInSinA"
 	case "B":
-		instance.artist = "Artist B"
+		instance.kind = "SibIsIna"
+	case "C":
+		instance.kind = "NajEbina"
 	default:
-		instance.artist = "Unknown"
+		instance.kind = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -84,7 +86,7 @@ func (instance *album) SetName(name string) error {
 	return nil
 }
 
-func (instance *album) SetAge(value uint32) error {
+func (instance *plant) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
