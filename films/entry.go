@@ -1,4 +1,4 @@
-package books
+package films
 
 // Объявление структуры 'Запись'
 
@@ -10,23 +10,23 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1800
-	maxValue uint32 = 2023
+	minValue uint32 = 1920
+	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type book struct {
-	name   string
-	age    uint32
-	author string
+type film struct {
+	name     string
+	age      uint32
+	director string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IBook interface {
+type IFilm interface {
 	// Геттеры
-	GetAuthor() string
+	GetDirector() string
 	GetName() string
 	GetAge() uint32
 
@@ -36,9 +36,9 @@ type IBook interface {
 }
 
 // Реализация конструктора
-func NewEntry(name string, value uint32) (IBook, error) {
+func NewEntry(name string, value uint32) (IFilm, error) {
 	// Создаём пустой экземпляр.
-	instance := book{}
+	instance := film{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,28 +55,28 @@ func NewEntry(name string, value uint32) (IBook, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance book) GetAuthor() string {
-	return instance.author
+func (instance film) GetDirector() string {
+	return instance.director
 }
 
-func (instance book) GetName() string {
+func (instance film) GetName() string {
 	return instance.name
 }
 
-func (instance book) GetAge() uint32 {
+func (instance film) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *book) SetName(name string) error {
+func (instance *film) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.author = "Author A"
+		instance.director = "Director A"
 	case "B":
-		instance.author = "Author B"
+		instance.director = "Director B"
 	default:
-		instance.author = "Unknown"
+		instance.director = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -84,7 +84,7 @@ func (instance *book) SetName(name string) error {
 	return nil
 }
 
-func (instance *book) SetAge(value uint32) error {
+func (instance *film) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
