@@ -18,22 +18,22 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateValueSum(collection []ICar) uint32 {
+func CalculateSpeedSum(collection []ICar) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
-		result += v.GetAge()
+		result += v.GetSpeed()
 	}
 
 	return result
 }
 
 // Вычисление среднего.
-func CalculateValueAvg(collection []ICar) (float64, error) {
+func CalculateSpeedAvg(collection []ICar) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
 
-	avg := float64(CalculateValueSum(collection)) / float64(len(collection))
+	avg := float64(CalculateSpeedSum(collection)) / float64(len(collection))
 	return avg, nil
 }
 

@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := cars.CalculateValueSum(collection)
-	avg, err := cars.CalculateValueAvg(collection)
+	sum := cars.CalculateSpeedSum(collection)
+	avg, err := cars.CalculateSpeedAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := cars.CalculateValueAvg([]cars.ICar{}); err != nil {
+	if avg, err := cars.CalculateSpeedAvg([]cars.ICar{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
