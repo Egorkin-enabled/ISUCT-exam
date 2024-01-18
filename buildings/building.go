@@ -1,8 +1,18 @@
-package monitors
+package buildings
 
 // Объявление структуры 'Монитор'
 
 import "fmt"
+
+// Константы для типов зданий
+type BuildingClass uint8
+
+const (
+	BuildingI BuildingClass = iota
+	BuildingII
+	BuildingIII
+	BuildingIV
+)
 
 // Константы для значения
 
@@ -10,42 +20,42 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 2000
+	minValue uint32 = 1700
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type monitor struct {
-	model      string
-	age        uint32
-	screenSize string
+type building struct {
+	address string
+	age     uint32
+	class   BuildingClass
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IMonitor interface {
+type IBuilding interface {
 	// Геттеры
-	GetScreenSize() string
-	GetModel() string
+	GetClass() BuildingClass
+	GetAddress() string
 	GetAge() uint32
 
 	// Сеттеры
 	SetModel(string) error
-	SetAge(uint32) error
+	SetAddress(uint32) error
 }
 
 // Реализация конструктора
-func NewComputer(model string, age uint32) (IMonitor, error) {
+func NewBuilding(model string, age uint32) (IBuilding, error) {
 	// Создаём пустой экземпляр.
-	instance := monitor{}
+	instance := building{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetModel(model); error != nil {
 		return nil, error
 	}
 
-	if error := instance.SetAge(age); error != nil {
+	if error := instance.SetAddress(age); error != nil {
 		return nil, error
 	}
 
@@ -55,30 +65,30 @@ func NewComputer(model string, age uint32) (IMonitor, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance monitor) GetScreenSize() string {
-	return instance.screenSize
+func (instance building) GetClass() BuildingClass {
+	return instance.class
 }
 
-func (instance monitor) GetModel() string {
-	return instance.model
+func (instance building) GetAddress() string {
+	return instance.address
 }
 
-func (instance monitor) GetAge() uint32 {
+func (instance building) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *monitor) SetModel(name string) error {
-	instance.model = name
+func (instance *building) SetModel(name string) error {
+	instance.address = name
 
 	switch name {
 	case "A":
-		instance.screenSize = "1920x1080"
+		instance.class = BuildingI
 	case "B":
-		instance.screenSize = "640x480"
+		instance.class = BuildingII
 	case "C":
-		instance.screenSize = "256x176"
+		instance.class = BuildingIII
 	default:
-		instance.screenSize = "Unknown"
+		instance.class = BuildingIV
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +96,7 @@ func (instance *monitor) SetModel(name string) error {
 	return nil
 }
 
-func (instance *monitor) SetAge(value uint32) error {
+func (instance *building) SetAddress(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
