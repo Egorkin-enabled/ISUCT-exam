@@ -1,6 +1,6 @@
-package plants
+package phones
 
-// Объявление структуры 'Растение'
+// Объявление структуры 'Телефон'
 
 import "fmt"
 
@@ -10,38 +10,38 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1700
+	minValue uint32 = 2000
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type plant struct {
-	name string
-	age  uint32
-	kind string
+type phone struct {
+	model        string
+	age          uint32
+	manufacturer string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IPlant interface {
+type IPhone interface {
 	// Геттеры
-	GetKind() string
-	GetName() string
+	GetManufacturer() string
+	GetModel() string
 	GetAge() uint32
 
 	// Сеттеры
-	SetName(string) error
+	SetModel(string) error
 	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewPlant(name string, age uint32) (IPlant, error) {
+func NewPhone(model string, age uint32) (IPhone, error) {
 	// Создаём пустой экземпляр.
-	instance := plant{}
+	instance := phone{}
 
 	// Устанавливаем поля с проверками на ошибки
-	if error := instance.SetName(name); error != nil {
+	if error := instance.SetModel(model); error != nil {
 		return nil, error
 	}
 
@@ -55,30 +55,30 @@ func NewPlant(name string, age uint32) (IPlant, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance plant) GetKind() string {
-	return instance.kind
+func (instance phone) GetManufacturer() string {
+	return instance.manufacturer
 }
 
-func (instance plant) GetName() string {
-	return instance.name
+func (instance phone) GetModel() string {
+	return instance.model
 }
 
-func (instance plant) GetAge() uint32 {
+func (instance phone) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *plant) SetName(name string) error {
-	instance.name = name
+func (instance *phone) SetModel(name string) error {
+	instance.model = name
 
 	switch name {
 	case "A":
-		instance.kind = "CumInSinA"
+		instance.manufacturer = "Apple"
 	case "B":
-		instance.kind = "SibIsIna"
+		instance.manufacturer = "Samsung"
 	case "C":
-		instance.kind = "NajEbina"
+		instance.manufacturer = "Infinix"
 	default:
-		instance.kind = "Unknown"
+		instance.manufacturer = "NoName"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +86,7 @@ func (instance *plant) SetName(name string) error {
 	return nil
 }
 
-func (instance *plant) SetAge(value uint32) error {
+func (instance *phone) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
