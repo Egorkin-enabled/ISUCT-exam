@@ -1,6 +1,6 @@
 package films
 
-// Объявление структуры 'Запись'
+// Объявление структуры 'Фильм'
 
 import "fmt"
 
@@ -36,7 +36,7 @@ type IFilm interface {
 }
 
 // Реализация конструктора
-func NewEntry(name string, value uint32) (IFilm, error) {
+func NewFilm(name string, value uint32) (IFilm, error) {
 	// Создаём пустой экземпляр.
 	instance := film{}
 

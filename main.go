@@ -11,7 +11,7 @@ func printStats(collection []films.IFilm) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Author")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Director")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
@@ -23,7 +23,7 @@ func printStats(collection []films.IFilm) {
 }
 
 func createInstanceInformative(collection *[]films.IFilm, name string, weight uint32) films.IFilm {
-	i, err := films.NewEntry(name, weight)
+	i, err := films.NewFilm(name, weight)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
