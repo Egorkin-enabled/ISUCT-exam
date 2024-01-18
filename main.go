@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 
-	"task.com/m/humans"
-	peoples "task.com/m/humans"
+	"Exam.isuct/case_1/humans"
 )
 
 func tryInitialize(people *[]humans.IHuman, age int32, name string) bool {
@@ -37,7 +36,7 @@ func main() {
 
 	printStats(people)
 
-	sum := peoples.CalculateAgeSum(people)
+	sum := humans.CalculateAgeSum(people)
 	fmt.Printf("Age sum is: %v\n", sum)
 
 	fmt.Println("TryAddUnique - case 'failure':")
