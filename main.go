@@ -22,11 +22,11 @@ func printStats(collection []airplanes.IAirplane) {
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]airplanes.IAirplane, name string, age uint32) airplanes.IAirplane {
-	i, err := airplanes.NewAirplane(name, age)
+func createInstanceInformative(collection *[]airplanes.IAirplane, model string, age uint32) airplanes.IAirplane {
+	i, err := airplanes.NewAirplane(model, age)
 
 	if err != nil {
-		fmt.Printf("'%v' error: %v\n", name, err)
+		fmt.Printf("'%v' error: %v\n", model, err)
 		return nil
 	}
 
