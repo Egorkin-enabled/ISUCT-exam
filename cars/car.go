@@ -1,4 +1,4 @@
-package books
+package cars
 
 // Объявление структуры 'Запись'
 
@@ -10,23 +10,23 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1800
+	minValue uint32 = 1900
 	maxValue uint32 = 2023
 )
 
 // Структура для записи.
 // Структура закрытая.
-type book struct {
-	name   string
-	age    uint32
-	author string
+type car struct {
+	name  string
+	age   uint32
+	speed uint32
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IBook interface {
+type ICar interface {
 	// Геттеры
-	GetAuthor() string
+	GetSpeed() uint32
 	GetName() string
 	GetAge() uint32
 
@@ -36,16 +36,16 @@ type IBook interface {
 }
 
 // Реализация конструктора
-func NewEntry(name string, value uint32) (IBook, error) {
+func NewEntry(name string, age uint32) (ICar, error) {
 	// Создаём пустой экземпляр.
-	instance := book{}
+	instance := car{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
 		return nil, error
 	}
 
-	if error := instance.SetAge(value); error != nil {
+	if error := instance.SetAge(age); error != nil {
 		return nil, error
 	}
 
@@ -55,40 +55,62 @@ func NewEntry(name string, value uint32) (IBook, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance book) GetAuthor() string {
-	return instance.author
+func (instance car) GetSpeed() uint32 {
+	return instance.speed
 }
 
-func (instance book) GetName() string {
+func (instance car) GetName() string {
 	return instance.name
 }
 
-func (instance book) GetAge() uint32 {
+func (instance car) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *book) SetName(name string) error {
+func (instance *car) updateSpeed() {
+	switch {
+	case instance.age < 1885:
+		instance.speed = 0
+
+	case instance.age < 2000:
+		switch instance.name {
+		case "A":
+			instance.speed = 120
+		case "B":
+			instance.speed = 100
+		default:
+			instance.speed = 80
+		}
+
+	default:
+		switch instance.name {
+		case "A":
+			instance.speed = 200
+		case "B":
+			instance.speed = 150
+		default:
+			instance.speed = 120
+		}
+	}
+}
+
+func (instance *car) SetName(name string) error {
 	instance.name = name
 
-	switch name {
-	case "A":
-		instance.author = "Author A"
-	case "B":
-		instance.author = "Author B"
-	default:
-		instance.author = "Unknown"
-	}
+	instance.updateSpeed()
 
 	// В данной реализации ошибок быть не может,
 	// Но закладываемся на будущее.
 	return nil
 }
 
-func (instance *book) SetAge(value uint32) error {
+func (instance *car) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
 
 	instance.age = value
+	instance.updateSpeed()
+
 	return nil
 }
