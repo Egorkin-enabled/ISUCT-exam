@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_14/fruits"
+	"Exam.isuct/case_15/drinks"
 )
 
-func printStats(collection []fruits.IFruit) {
+func printStats(collection []drinks.IDrink) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Color")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Kind")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetColor())
+		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetKind())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]fruits.IFruit, name string, age uint32) fruits.IFruit {
-	i, err := fruits.NewFruit(name, age)
+func createInstanceInformative(collection *[]drinks.IDrink, name string, age uint32) drinks.IDrink {
+	i, err := drinks.NewDrink(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]fruits.IFruit, name string, age uin
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]fruits.IFruit, 0, 4)
+	collection := make([]drinks.IDrink, 0, 4)
 
 	createInstanceInformative(&collection, "A", 1008)
 	createInstanceInformative(&collection, "B", 2010)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := fruits.CalculateAgeSum(collection)
-	avg, err := fruits.CalculateAgeAvg(collection)
+	sum := drinks.CalculateAgeSum(collection)
+	avg, err := drinks.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := fruits.CalculateAgeAvg([]fruits.IFruit{}); err != nil {
+	if avg, err := drinks.CalculateAgeAvg([]drinks.IDrink{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = fruits.TryAddUniqueInstance(
+	success = drinks.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = fruits.TryAddUniqueInstance(
+	success = drinks.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2010))
 

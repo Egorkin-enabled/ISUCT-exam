@@ -1,6 +1,6 @@
-package fruits
+package drinks
 
-// Объявление структуры 'Фрукт'
+// Объявление структуры 'Напиток'
 
 import "fmt"
 
@@ -16,17 +16,17 @@ const (
 
 // Структура для записи.
 // Структура закрытая.
-type fruit struct {
-	name  string
-	age   uint32
-	color string
+type drink struct {
+	name string
+	age  uint32
+	kind string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IFruit interface {
+type IDrink interface {
 	// Геттеры
-	GetColor() string
+	GetKind() string
 	GetName() string
 	GetAge() uint32
 
@@ -36,9 +36,9 @@ type IFruit interface {
 }
 
 // Реализация конструктора
-func NewFruit(name string, age uint32) (IFruit, error) {
+func NewDrink(name string, age uint32) (IDrink, error) {
 	// Создаём пустой экземпляр.
-	instance := fruit{}
+	instance := drink{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,30 +55,30 @@ func NewFruit(name string, age uint32) (IFruit, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance fruit) GetColor() string {
-	return instance.color
+func (instance drink) GetKind() string {
+	return instance.kind
 }
 
-func (instance fruit) GetName() string {
+func (instance drink) GetName() string {
 	return instance.name
 }
 
-func (instance fruit) GetAge() uint32 {
+func (instance drink) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *fruit) SetName(name string) error {
+func (instance *drink) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.color = "Red"
+		instance.kind = "Water"
 	case "B":
-		instance.color = "Orange"
+		instance.kind = "Soda"
 	case "C":
-		instance.color = "Yellow"
+		instance.kind = "Alcahol"
 	default:
-		instance.color = "Unknown"
+		instance.kind = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +86,7 @@ func (instance *fruit) SetName(name string) error {
 	return nil
 }
 
-func (instance *fruit) SetAge(value uint32) error {
+func (instance *drink) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

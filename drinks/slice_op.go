@@ -1,4 +1,4 @@
-package fruits
+package drinks
 
 // Опреации над срезами
 
@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []IFruit) uint32 {
+func CalculateAgeSum(collection []IDrink) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,7 +28,7 @@ func CalculateAgeSum(collection []IFruit) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []IFruit) (float64, error) {
+func CalculateAgeAvg(collection []IDrink) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,7 +38,7 @@ func CalculateAgeAvg(collection []IFruit) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IFruit, instance IFruit) bool {
+func TryAddUniqueInstance(collection *[]IDrink, instance IDrink) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
