@@ -23,13 +23,7 @@ const (
 	maxValue uint32 = 200
 )
 
-// Границы всеса, по которым опеределяются виды
-const (
-	kind1UntilValue uint32 = 133
-	kind2UntilValue        = 166
-)
-
-// Структура для животных.
+// Структура для записи.
 // Структура закрытая.
 type entry struct {
 	name  string
@@ -85,6 +79,15 @@ func (instance entry) GetValue() uint32 {
 func (instance *entry) SetName(name string) error {
 	instance.name = name
 
+	switch name {
+	case "A":
+		instance.kind = Kind1
+	case "B":
+		instance.kind = Kind2
+	default:
+		instance.kind = Kind3
+	}
+
 	// В данной реализации ошибок быть не может,
 	// Но закладываемся на будущее.
 	return nil
@@ -96,15 +99,5 @@ func (instance *entry) SetValue(value uint32) error {
 	}
 
 	instance.value = value
-
-	switch {
-	case value <= kind1UntilValue:
-		instance.kind = Kind1
-	case value <= kind2UntilValue:
-		instance.kind = Kind2
-	default:
-		instance.kind = Kind3
-	}
-
 	return nil
 }
