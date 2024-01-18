@@ -1,4 +1,4 @@
-package sports
+package games
 
 // Опреации над срезами
 
@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []ISport) uint32 {
+func CalculateAgeSum(collection []IGame) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,7 +28,7 @@ func CalculateAgeSum(collection []ISport) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []ISport) (float64, error) {
+func CalculateAgeAvg(collection []IGame) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,12 +38,12 @@ func CalculateAgeAvg(collection []ISport) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]ISport, instance ISport) bool {
+func TryAddUniqueInstance(collection *[]IGame, instance IGame) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
 		// Проверку country упкскаем, т.к. country зависит от проверяемых значений
-		if v.GetKind() == instance.GetKind() && v.GetAge() == instance.GetAge() {
+		if v.GetName() == instance.GetName() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
 		}

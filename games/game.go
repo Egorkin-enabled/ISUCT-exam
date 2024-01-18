@@ -1,6 +1,6 @@
-package sports
+package games
 
-// Объявление структуры 'Запись'
+// Объявление структуры 'Игра'
 
 import "fmt"
 
@@ -10,38 +10,38 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1800
+	minValue uint32 = 1980
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type sport struct {
-	kind    string
-	age     uint32
-	country string
+type game struct {
+	name   string
+	age    uint32
+	genere string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type ISport interface {
+type IGame interface {
 	// Геттеры
-	GetCountry() string
-	GetKind() string
+	GetGenere() string
+	GetName() string
 	GetAge() uint32
 
 	// Сеттеры
-	SetKind(string) error
+	SetName(string) error
 	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewSport(name string, age uint32) (ISport, error) {
+func NewGame(name string, age uint32) (IGame, error) {
 	// Создаём пустой экземпляр.
-	instance := sport{}
+	instance := game{}
 
 	// Устанавливаем поля с проверками на ошибки
-	if error := instance.SetKind(name); error != nil {
+	if error := instance.SetName(name); error != nil {
 		return nil, error
 	}
 
@@ -55,28 +55,28 @@ func NewSport(name string, age uint32) (ISport, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance sport) GetCountry() string {
-	return instance.country
+func (instance game) GetGenere() string {
+	return instance.genere
 }
 
-func (instance sport) GetKind() string {
-	return instance.kind
+func (instance game) GetName() string {
+	return instance.name
 }
 
-func (instance sport) GetAge() uint32 {
+func (instance game) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *sport) SetKind(name string) error {
-	instance.kind = name
+func (instance *game) SetName(name string) error {
+	instance.name = name
 
 	switch name {
 	case "A":
-		instance.country = "Country A"
+		instance.genere = "Genere A"
 	case "B":
-		instance.country = "Country B"
+		instance.genere = "Ganere B"
 	default:
-		instance.country = "Unknown"
+		instance.genere = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -84,7 +84,7 @@ func (instance *sport) SetKind(name string) error {
 	return nil
 }
 
-func (instance *sport) SetAge(value uint32) error {
+func (instance *game) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

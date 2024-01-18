@@ -1,3 +1,3 @@
-module Exam.isuct/case_8
+module Exam.isuct/case_9
 
 go 1.19
