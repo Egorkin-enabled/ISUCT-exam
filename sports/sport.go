@@ -1,4 +1,4 @@
-package restaurants
+package sports
 
 // Объявление структуры 'Запись'
 
@@ -16,32 +16,32 @@ const (
 
 // Структура для записи.
 // Структура закрытая.
-type restaurant struct {
-	name    string
+type sport struct {
+	kind    string
 	age     uint32
-	kitchen string
+	country string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IRestaurant interface {
+type ISport interface {
 	// Геттеры
-	GetKitchen() string
-	GetName() string
+	GetCountry() string
+	GetKind() string
 	GetAge() uint32
 
 	// Сеттеры
-	SetName(string) error
+	SetKind(string) error
 	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewRestaurant(name string, age uint32) (IRestaurant, error) {
+func NewSport(name string, age uint32) (ISport, error) {
 	// Создаём пустой экземпляр.
-	instance := restaurant{}
+	instance := sport{}
 
 	// Устанавливаем поля с проверками на ошибки
-	if error := instance.SetName(name); error != nil {
+	if error := instance.SetKind(name); error != nil {
 		return nil, error
 	}
 
@@ -55,28 +55,28 @@ func NewRestaurant(name string, age uint32) (IRestaurant, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance restaurant) GetKitchen() string {
-	return instance.kitchen
+func (instance sport) GetCountry() string {
+	return instance.country
 }
 
-func (instance restaurant) GetName() string {
-	return instance.name
+func (instance sport) GetKind() string {
+	return instance.kind
 }
 
-func (instance restaurant) GetAge() uint32 {
+func (instance sport) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *restaurant) SetName(name string) error {
-	instance.name = name
+func (instance *sport) SetKind(name string) error {
+	instance.kind = name
 
 	switch name {
 	case "A":
-		instance.kitchen = "Kitchen A"
+		instance.country = "Country A"
 	case "B":
-		instance.kitchen = "Kitchen B"
+		instance.country = "Country B"
 	default:
-		instance.kitchen = "Unknown"
+		instance.country = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -84,7 +84,7 @@ func (instance *restaurant) SetName(name string) error {
 	return nil
 }
 
-func (instance *restaurant) SetAge(value uint32) error {
+func (instance *sport) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

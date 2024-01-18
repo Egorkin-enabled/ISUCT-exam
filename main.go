@@ -4,29 +4,29 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_7/restaurants"
+	"Exam.isuct/case_8/sports"
 )
 
-func printStats(collection []restaurants.IRestaurant) {
+func printStats(collection []sports.ISport) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Kitchen")
+	head := fmt.Sprintf(row, "#", "Kind", "Age", "Country")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetKitchen())
+		fmt.Printf(row, i, v.GetKind(), v.GetAge(), v.GetCountry())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]restaurants.IRestaurant, name string, age uint32) restaurants.IRestaurant {
-	i, err := restaurants.NewRestaurant(name, age)
+func createInstanceInformative(collection *[]sports.ISport, kind string, age uint32) sports.ISport {
+	i, err := sports.NewSport(kind, age)
 
 	if err != nil {
-		fmt.Printf("'%v' error: %v\n", name, err)
+		fmt.Printf("'%v' error: %v\n", kind, err)
 		return nil
 	}
 
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]restaurants.IRestaurant, name strin
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]restaurants.IRestaurant, 0, 4)
+	collection := make([]sports.ISport, 0, 4)
 
 	createInstanceInformative(&collection, "A", 1900)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := restaurants.CalculateAgeSum(collection)
-	avg, err := restaurants.CalculateAgeAvg(collection)
+	sum := sports.CalculateAgeSum(collection)
+	avg, err := sports.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := restaurants.CalculateAgeAvg([]restaurants.IRestaurant{}); err != nil {
+	if avg, err := sports.CalculateAgeAvg([]sports.ISport{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = restaurants.TryAddUniqueInstance(
+	success = sports.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 1920))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = restaurants.TryAddUniqueInstance(
+	success = sports.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 
