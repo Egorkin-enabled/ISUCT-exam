@@ -1,4 +1,4 @@
-package airplanes
+package programs
 
 // Опреации над срезами
 
@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []IAirplane) uint32 {
+func CalculateAgeSum(collection []IProgram) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,7 +28,7 @@ func CalculateAgeSum(collection []IAirplane) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []IAirplane) (float64, error) {
+func CalculateAgeAvg(collection []IProgram) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,12 +38,12 @@ func CalculateAgeAvg(collection []IAirplane) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IAirplane, instance IAirplane) bool {
+func TryAddUniqueInstance(collection *[]IProgram, instance IProgram) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
 		// Проверку country упкскаем, т.к. country зависит от проверяемых значений
-		if v.GetModel() == instance.GetModel() && v.GetAge() == instance.GetAge() {
+		if v.GetName() == instance.GetName() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
 		}

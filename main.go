@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_17/airplanes"
+	"Exam.isuct/case_25/programs"
 )
 
-func printStats(collection []airplanes.IAirplane) {
+func printStats(collection []programs.IProgram) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Model", "Age", "Kind")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Kind")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetKind())
+		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetKind())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]airplanes.IAirplane, name string, age uint32) airplanes.IAirplane {
-	i, err := airplanes.NewAirplane(name, age)
+func createInstanceInformative(collection *[]programs.IProgram, name string, age uint32) programs.IProgram {
+	i, err := programs.NewProgram(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]airplanes.IAirplane, name string, a
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]airplanes.IAirplane, 0, 4)
+	collection := make([]programs.IProgram, 0, 4)
 
 	createInstanceInformative(&collection, "A", 2008)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := airplanes.CalculateAgeSum(collection)
-	avg, err := airplanes.CalculateAgeAvg(collection)
+	sum := programs.CalculateAgeSum(collection)
+	avg, err := programs.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := airplanes.CalculateAgeAvg([]airplanes.IAirplane{}); err != nil {
+	if avg, err := programs.CalculateAgeAvg([]programs.IProgram{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = airplanes.TryAddUniqueInstance(
+	success = programs.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = airplanes.TryAddUniqueInstance(
+	success = programs.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 

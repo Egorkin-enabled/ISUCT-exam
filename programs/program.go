@@ -1,4 +1,4 @@
-package airplanes
+package programs
 
 // Объявление структуры 'Самолёт'
 
@@ -10,38 +10,38 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1900
+	minValue uint32 = 1980
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type airplane struct {
-	model string
-	age   uint32
-	kind  string
+type program struct {
+	name string
+	age  uint32
+	kind string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IAirplane interface {
+type IProgram interface {
 	// Геттеры
 	GetKind() string
-	GetModel() string
+	GetName() string
 	GetAge() uint32
 
 	// Сеттеры
-	SetModel(string) error
+	SetName(string) error
 	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewAirplane(model string, age uint32) (IAirplane, error) {
+func NewProgram(model string, age uint32) (IProgram, error) {
 	// Создаём пустой экземпляр.
-	instance := airplane{}
+	instance := program{}
 
 	// Устанавливаем поля с проверками на ошибки
-	if error := instance.SetModel(model); error != nil {
+	if error := instance.SetName(model); error != nil {
 		return nil, error
 	}
 
@@ -55,28 +55,28 @@ func NewAirplane(model string, age uint32) (IAirplane, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance airplane) GetKind() string {
+func (instance program) GetKind() string {
 	return instance.kind
 }
 
-func (instance airplane) GetModel() string {
-	return instance.model
+func (instance program) GetName() string {
+	return instance.name
 }
 
-func (instance airplane) GetAge() uint32 {
+func (instance program) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *airplane) SetModel(name string) error {
-	instance.model = name
+func (instance *program) SetName(name string) error {
+	instance.name = name
 
 	switch name {
 	case "A":
-		instance.kind = "Kind-A"
+		instance.kind = "Illustrate"
 	case "B":
-		instance.kind = "B-kind"
+		instance.kind = "CAD"
 	case "C":
-		instance.kind = "Ki-C-nd"
+		instance.kind = "Game"
 	default:
 		instance.kind = "Unknown"
 	}
@@ -86,7 +86,7 @@ func (instance *airplane) SetModel(name string) error {
 	return nil
 }
 
-func (instance *airplane) SetAge(value uint32) error {
+func (instance *program) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
