@@ -1,6 +1,6 @@
-package computers
+package monitors
 
-// Объявление структуры 'Компьютер'
+// Объявление структуры 'Монитор'
 
 import "fmt"
 
@@ -10,23 +10,23 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1990
+	minValue uint32 = 2000
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type computer struct {
-	model string
-	age   uint32
-	kind  string
+type monitor struct {
+	model      string
+	age        uint32
+	screenSize string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IComputer interface {
+type IMonitor interface {
 	// Геттеры
-	GetKind() string
+	GetScreenSize() string
 	GetModel() string
 	GetAge() uint32
 
@@ -36,9 +36,9 @@ type IComputer interface {
 }
 
 // Реализация конструктора
-func NewComputer(model string, age uint32) (IComputer, error) {
+func NewComputer(model string, age uint32) (IMonitor, error) {
 	// Создаём пустой экземпляр.
-	instance := computer{}
+	instance := monitor{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetModel(model); error != nil {
@@ -55,30 +55,30 @@ func NewComputer(model string, age uint32) (IComputer, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance computer) GetKind() string {
-	return instance.kind
+func (instance monitor) GetScreenSize() string {
+	return instance.screenSize
 }
 
-func (instance computer) GetModel() string {
+func (instance monitor) GetModel() string {
 	return instance.model
 }
 
-func (instance computer) GetAge() uint32 {
+func (instance monitor) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *computer) SetModel(name string) error {
+func (instance *monitor) SetModel(name string) error {
 	instance.model = name
 
 	switch name {
 	case "A":
-		instance.kind = "x86"
+		instance.screenSize = "1920x1080"
 	case "B":
-		instance.kind = "amd64"
+		instance.screenSize = "640x480"
 	case "C":
-		instance.kind = "ARM"
+		instance.screenSize = "256x176"
 	default:
-		instance.kind = "Chinese"
+		instance.screenSize = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +86,7 @@ func (instance *computer) SetModel(name string) error {
 	return nil
 }
 
-func (instance *computer) SetAge(value uint32) error {
+func (instance *monitor) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

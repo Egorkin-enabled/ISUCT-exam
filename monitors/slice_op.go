@@ -1,4 +1,4 @@
-package computers
+package monitors
 
 // Опреации над срезами
 
@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []IComputer) uint32 {
+func CalculateAgeSum(collection []IMonitor) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,7 +28,7 @@ func CalculateAgeSum(collection []IComputer) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []IComputer) (float64, error) {
+func CalculateAgeAvg(collection []IMonitor) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,7 +38,7 @@ func CalculateAgeAvg(collection []IComputer) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IComputer, instance IComputer) bool {
+func TryAddUniqueInstance(collection *[]IMonitor, instance IMonitor) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
