@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_14/fruits"
+	"Exam.isuct/case_23/pencils"
 )
 
-func printStats(collection []fruits.IFruit) {
+func printStats(collection []pencils.IPencil) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Color")
+	head := fmt.Sprintf(row, "#", "Model", "Age", "Color")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetColor())
+		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetColor())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]fruits.IFruit, name string, age uint32) fruits.IFruit {
-	i, err := fruits.NewFruit(name, age)
+func createInstanceInformative(collection *[]pencils.IPencil, name string, age uint32) pencils.IPencil {
+	i, err := pencils.NewPencil(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,18 +40,18 @@ func createInstanceInformative(collection *[]fruits.IFruit, name string, age uin
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]fruits.IFruit, 0, 4)
+	collection := make([]pencils.IPencil, 0, 4)
 
-	createInstanceInformative(&collection, "A", 1008)
+	createInstanceInformative(&collection, "A", 2008)
 	createInstanceInformative(&collection, "B", 2010)
-	createInstanceInformative(&collection, "C", 1819)
+	createInstanceInformative(&collection, "C", 1959)
 	createInstanceInformative(&collection, "D", 900)
 	createInstanceInformative(&collection, "E", 2200)
 
 	printStats(collection)
 
-	sum := fruits.CalculateAgeSum(collection)
-	avg, err := fruits.CalculateAgeAvg(collection)
+	sum := pencils.CalculateAgeSum(collection)
+	avg, err := pencils.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := fruits.CalculateAgeAvg([]fruits.IFruit{}); err != nil {
+	if avg, err := pencils.CalculateAgeAvg([]pencils.IPencil{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = fruits.TryAddUniqueInstance(
+	success = pencils.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = fruits.TryAddUniqueInstance(
+	success = pencils.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2010))
 

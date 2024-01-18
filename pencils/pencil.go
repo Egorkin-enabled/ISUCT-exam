@@ -1,4 +1,4 @@
-package fruits
+package pencils
 
 // Объявление структуры 'Фрукт'
 
@@ -10,38 +10,38 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1000
+	minValue uint32 = 1950
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type fruit struct {
-	name  string
+type pencil struct {
+	model string
 	age   uint32
 	color string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IFruit interface {
+type IPencil interface {
 	// Геттеры
 	GetColor() string
-	GetName() string
+	GetModel() string
 	GetAge() uint32
 
 	// Сеттеры
-	SetName(string) error
+	SetModel(string) error
 	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewFruit(name string, age uint32) (IFruit, error) {
+func NewPencil(model string, age uint32) (IPencil, error) {
 	// Создаём пустой экземпляр.
-	instance := fruit{}
+	instance := pencil{}
 
 	// Устанавливаем поля с проверками на ошибки
-	if error := instance.SetName(name); error != nil {
+	if error := instance.SetModel(model); error != nil {
 		return nil, error
 	}
 
@@ -55,28 +55,28 @@ func NewFruit(name string, age uint32) (IFruit, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance fruit) GetColor() string {
+func (instance pencil) GetColor() string {
 	return instance.color
 }
 
-func (instance fruit) GetName() string {
-	return instance.name
+func (instance pencil) GetModel() string {
+	return instance.model
 }
 
-func (instance fruit) GetAge() uint32 {
+func (instance pencil) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *fruit) SetName(name string) error {
-	instance.name = name
+func (instance *pencil) SetModel(name string) error {
+	instance.model = name
 
 	switch name {
 	case "A":
-		instance.color = "Red"
+		instance.color = "Blue"
 	case "B":
-		instance.color = "Orange"
+		instance.color = "Indigo"
 	case "C":
-		instance.color = "Yellow"
+		instance.color = "Light-blue"
 	default:
 		instance.color = "Unknown"
 	}
@@ -86,7 +86,7 @@ func (instance *fruit) SetName(name string) error {
 	return nil
 }
 
-func (instance *fruit) SetAge(value uint32) error {
+func (instance *pencil) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
