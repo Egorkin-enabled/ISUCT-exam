@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_21/furnishings"
+	"Exam.isuct/case_22/yachts"
 )
 
-func printStats(collection []furnishings.IFurnishing) {
+func printStats(collection []yachts.IYacht) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
@@ -16,14 +16,14 @@ func printStats(collection []furnishings.IFurnishing) {
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetMaterial(), v.GetAge(), v.GetKind())
+		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetKind())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]furnishings.IFurnishing, name string, age uint32) furnishings.IFurnishing {
-	i, err := furnishings.NewComputer(name, age)
+func createInstanceInformative(collection *[]yachts.IYacht, name string, age uint32) yachts.IYacht {
+	i, err := yachts.NewYacht(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]furnishings.IFurnishing, name strin
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]furnishings.IFurnishing, 0, 4)
+	collection := make([]yachts.IYacht, 0, 4)
 
 	createInstanceInformative(&collection, "A", 2008)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := furnishings.CalculateAgeSum(collection)
-	avg, err := furnishings.CalculateAgeAvg(collection)
+	sum := yachts.CalculateAgeSum(collection)
+	avg, err := yachts.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := furnishings.CalculateAgeAvg([]furnishings.IFurnishing{}); err != nil {
+	if avg, err := yachts.CalculateAgeAvg([]yachts.IYacht{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = furnishings.TryAddUniqueInstance(
+	success = yachts.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = furnishings.TryAddUniqueInstance(
+	success = yachts.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 
