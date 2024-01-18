@@ -1,4 +1,4 @@
-package films
+package products
 
 // Объявление структуры 'Запись'
 
@@ -7,36 +7,36 @@ import "fmt"
 // Константы для значения
 
 // Человеческое название
-const valueHumanName = "Age"
+const valueHumanName = "Count"
 
 const (
-	minValue uint32 = 1920
-	maxValue uint32 = 2024
+	minValue uint32 = 0
+	maxValue uint32 = 1000
 )
 
 // Структура для записи.
 // Структура закрытая.
 type film struct {
-	name     string
-	age      uint32
-	director string
+	name  string
+	count uint32
+	price uint32
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IFilm interface {
+type IProduct interface {
 	// Геттеры
-	GetDirector() string
+	GetPrice() uint32
 	GetName() string
-	GetAge() uint32
+	GetCount() uint32
 
 	// Сеттеры
 	SetName(string) error
-	SetAge(uint32) error
+	SetCount(uint32) error
 }
 
 // Реализация конструктора
-func NewEntry(name string, value uint32) (IFilm, error) {
+func NewProduct(name string, value uint32) (IProduct, error) {
 	// Создаём пустой экземпляр.
 	instance := film{}
 
@@ -45,7 +45,7 @@ func NewEntry(name string, value uint32) (IFilm, error) {
 		return nil, error
 	}
 
-	if error := instance.SetAge(value); error != nil {
+	if error := instance.SetCount(value); error != nil {
 		return nil, error
 	}
 
@@ -55,16 +55,16 @@ func NewEntry(name string, value uint32) (IFilm, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance film) GetDirector() string {
-	return instance.director
+func (instance film) GetPrice() uint32 {
+	return instance.price
 }
 
 func (instance film) GetName() string {
 	return instance.name
 }
 
-func (instance film) GetAge() uint32 {
-	return instance.age
+func (instance film) GetCount() uint32 {
+	return instance.count
 }
 
 func (instance *film) SetName(name string) error {
@@ -72,11 +72,11 @@ func (instance *film) SetName(name string) error {
 
 	switch name {
 	case "A":
-		instance.director = "Director A"
+		instance.price = 700
 	case "B":
-		instance.director = "Director B"
+		instance.price = 1200
 	default:
-		instance.director = "Unknown"
+		instance.price = 200
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -84,11 +84,11 @@ func (instance *film) SetName(name string) error {
 	return nil
 }
 
-func (instance *film) SetAge(value uint32) error {
+func (instance *film) SetCount(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
 
-	instance.age = value
+	instance.count = value
 	return nil
 }

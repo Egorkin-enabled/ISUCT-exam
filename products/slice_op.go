@@ -1,4 +1,4 @@
-package films
+package products
 
 // Опреации над срезами
 
@@ -18,32 +18,32 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []IFilm) uint32 {
+func CalculatePriceSum(collection []IProduct) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
-		result += v.GetAge()
+		result += v.GetPrice()
 	}
 
 	return result
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []IFilm) (float64, error) {
+func CalculatePriceAvg(collection []IProduct) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
 
-	avg := float64(CalculateAgeSum(collection)) / float64(len(collection))
+	avg := float64(CalculatePriceSum(collection)) / float64(len(collection))
 	return avg, nil
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IFilm, instance IFilm) bool {
+func TryAddUniqueInstance(collection *[]IProduct, instance IProduct) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
 		// Проверку kind упкскаем, т.к. kind зависит от проверяемых значений
-		if v.GetName() == instance.GetName() && v.GetAge() == instance.GetAge() {
+		if v.GetName() == instance.GetName() && v.GetCount() == instance.GetCount() {
 			// Нашли такую-же структуру - выходим.
 			return false
 		}

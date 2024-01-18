@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_5/films"
+	"Exam.isuct/case_6/products"
 )
 
-func printStats(collection []films.IFilm) {
+func printStats(collection []products.IProduct) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Author")
+	head := fmt.Sprintf(row, "#", "Name", "Count", "Price")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetDirector())
+		fmt.Printf(row, i, v.GetName(), v.GetCount(), v.GetPrice())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]films.IFilm, name string, weight uint32) films.IFilm {
-	i, err := films.NewEntry(name, weight)
+func createInstanceInformative(collection *[]products.IProduct, name string, count uint32) products.IProduct {
+	i, err := products.NewProduct(name, count)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,18 +40,17 @@ func createInstanceInformative(collection *[]films.IFilm, name string, weight ui
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]films.IFilm, 0, 4)
+	collection := make([]products.IProduct, 0, 4)
 
-	createInstanceInformative(&collection, "A", 1960)
-	createInstanceInformative(&collection, "B", 2020)
-	createInstanceInformative(&collection, "C", 1927)
-	createInstanceInformative(&collection, "D", 300)
-	createInstanceInformative(&collection, "E", 2030)
+	createInstanceInformative(&collection, "A", 500)
+	createInstanceInformative(&collection, "B", 600)
+	createInstanceInformative(&collection, "C", 700)
+	createInstanceInformative(&collection, "D", 1200)
 
 	printStats(collection)
 
-	sum := films.CalculateAgeSum(collection)
-	avg, err := films.CalculateAgeAvg(collection)
+	sum := products.CalculatePriceSum(collection)
+	avg, err := products.CalculatePriceAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +60,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := films.CalculateAgeAvg([]films.IFilm{}); err != nil {
+	if avg, err := products.CalculatePriceAvg([]products.IProduct{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,9 +71,9 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = films.TryAddUniqueInstance(
+	success = products.TryAddUniqueInstance(
 		&collection,
-		createInstanceInformative(nil, "D", 2010))
+		createInstanceInformative(nil, "D", 120))
 
 	if success {
 		fmt.Print("Success!\n\n")
@@ -83,9 +82,9 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = films.TryAddUniqueInstance(
+	success = products.TryAddUniqueInstance(
 		&collection,
-		createInstanceInformative(nil, "B", 2020))
+		createInstanceInformative(nil, "B", 600))
 
 	if success {
 		fmt.Print("Unexcepted success.\n\n")
