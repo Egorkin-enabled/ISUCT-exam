@@ -1,60 +1,51 @@
-package entries
+package books
 
 // Объявление структуры 'Запись'
 
 import "fmt"
 
-// Виды записей: вид 1, вид 2, вид 3
-type EntryKind uint8
-
-const (
-	Kind1 EntryKind = iota
-	Kind2
-	Kind3
-)
-
 // Константы для значения
 
 // Человеческое название
-const valueHumanName = "Value"
+const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 100
-	maxValue uint32 = 200
+	minValue uint32 = 1800
+	maxValue uint32 = 2023
 )
 
 // Структура для записи.
 // Структура закрытая.
-type entry struct {
-	name  string
-	value uint32
-	kind  EntryKind
+type book struct {
+	name   string
+	age    uint32
+	author string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IEntry interface {
+type IBook interface {
 	// Геттеры
-	GetKind() EntryKind
+	GetAuthor() string
 	GetName() string
-	GetValue() uint32
+	GetAge() uint32
 
 	// Сеттеры
 	SetName(string) error
-	SetValue(uint32) error
+	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewEntry(name string, value uint32) (IEntry, error) {
+func NewEntry(name string, value uint32) (IBook, error) {
 	// Создаём пустой экземпляр.
-	instance := entry{}
+	instance := book{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
 		return nil, error
 	}
 
-	if error := instance.SetValue(value); error != nil {
+	if error := instance.SetAge(value); error != nil {
 		return nil, error
 	}
 
@@ -64,28 +55,28 @@ func NewEntry(name string, value uint32) (IEntry, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance entry) GetKind() EntryKind {
-	return instance.kind
+func (instance book) GetAuthor() string {
+	return instance.author
 }
 
-func (instance entry) GetName() string {
+func (instance book) GetName() string {
 	return instance.name
 }
 
-func (instance entry) GetValue() uint32 {
-	return instance.value
+func (instance book) GetAge() uint32 {
+	return instance.age
 }
 
-func (instance *entry) SetName(name string) error {
+func (instance *book) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.kind = Kind1
+		instance.author = "Author A"
 	case "B":
-		instance.kind = Kind2
+		instance.author = "Author B"
 	default:
-		instance.kind = Kind3
+		instance.author = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -93,11 +84,11 @@ func (instance *entry) SetName(name string) error {
 	return nil
 }
 
-func (instance *entry) SetValue(value uint32) error {
+func (instance *book) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
 
-	instance.value = value
+	instance.age = value
 	return nil
 }

@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_n/entries"
+	"Exam.isuct/case_3/books"
 )
 
-func printStats(collection []entries.IEntry) {
+func printStats(collection []books.IBook) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Value", "Kind")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Author")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetName(), v.GetValue(), v.GetKind())
+		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetAuthor())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]entries.IEntry, name string, weight uint32) entries.IEntry {
-	i, err := entries.NewEntry(name, weight)
+func createInstanceInformative(collection *[]books.IBook, name string, weight uint32) books.IBook {
+	i, err := books.NewEntry(name, weight)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,18 +40,18 @@ func createInstanceInformative(collection *[]entries.IEntry, name string, weight
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]entries.IEntry, 0, 4)
+	collection := make([]books.IBook, 0, 4)
 
-	createInstanceInformative(&collection, "A", 130)
-	createInstanceInformative(&collection, "B", 160)
-	createInstanceInformative(&collection, "C", 180)
-	createInstanceInformative(&collection, "D", 000)
-	createInstanceInformative(&collection, "E", 280)
+	createInstanceInformative(&collection, "A", 1800)
+	createInstanceInformative(&collection, "B", 2020)
+	createInstanceInformative(&collection, "C", 1927)
+	createInstanceInformative(&collection, "D", 300)
+	createInstanceInformative(&collection, "E", 2030)
 
 	printStats(collection)
 
-	sum := entries.CalculateValueSum(collection)
-	avg, err := entries.CalculateValueAvg(collection)
+	sum := books.CalculateValueSum(collection)
+	avg, err := books.CalculateValueAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := entries.CalculateValueAvg([]entries.IEntry{}); err != nil {
+	if avg, err := books.CalculateValueAvg([]books.IBook{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,9 +72,9 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = entries.TryAddUniqueInstance(
+	success = books.TryAddUniqueInstance(
 		&collection,
-		createInstanceInformative(nil, "D", 150))
+		createInstanceInformative(nil, "D", 2010))
 
 	if success {
 		fmt.Print("Success!\n\n")
@@ -83,9 +83,9 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = entries.TryAddUniqueInstance(
+	success = books.TryAddUniqueInstance(
 		&collection,
-		createInstanceInformative(nil, "B", 160))
+		createInstanceInformative(nil, "B", 2020))
 
 	if success {
 		fmt.Print("Unexcepted success.\n\n")

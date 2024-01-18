@@ -1,4 +1,4 @@
-package entries
+package books
 
 // Опреации над срезами
 
@@ -18,17 +18,17 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateValueSum(collection []IEntry) uint32 {
+func CalculateValueSum(collection []IBook) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
-		result += v.GetValue()
+		result += v.GetAge()
 	}
 
 	return result
 }
 
 // Вычисление среднего.
-func CalculateValueAvg(collection []IEntry) (float64, error) {
+func CalculateValueAvg(collection []IBook) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,12 +38,12 @@ func CalculateValueAvg(collection []IEntry) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IEntry, instance IEntry) bool {
+func TryAddUniqueInstance(collection *[]IBook, instance IBook) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
 		// Проверку kind упкскаем, т.к. kind зависит от проверяемых значений
-		if v.GetName() == instance.GetName() && v.GetValue() == instance.GetValue() {
+		if v.GetName() == instance.GetName() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
 		}
