@@ -1,6 +1,6 @@
 package cars
 
-// Объявление структуры 'Запись'
+// Объявление структуры 'Машина'
 
 import "fmt"
 
@@ -36,7 +36,7 @@ type ICar interface {
 }
 
 // Реализация конструктора
-func NewEntry(name string, age uint32) (ICar, error) {
+func NewCar(name string, age uint32) (ICar, error) {
 	// Создаём пустой экземпляр.
 	instance := car{}
 

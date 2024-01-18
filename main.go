@@ -11,7 +11,7 @@ func printStats(collection []cars.ICar) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Author")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Speed")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
@@ -23,7 +23,7 @@ func printStats(collection []cars.ICar) {
 }
 
 func createInstanceInformative(collection *[]cars.ICar, name string, weight uint32) cars.ICar {
-	i, err := cars.NewEntry(name, weight)
+	i, err := cars.NewCar(name, weight)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
