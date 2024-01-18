@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_15/drinks"
+	"Exam.isuct/case_16/minerals"
 )
 
-func printStats(collection []drinks.IDrink) {
+func printStats(collection []minerals.IMineral) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
@@ -22,8 +22,8 @@ func printStats(collection []drinks.IDrink) {
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]drinks.IDrink, name string, age uint32) drinks.IDrink {
-	i, err := drinks.NewDrink(name, age)
+func createInstanceInformative(collection *[]minerals.IMineral, name string, age uint32) minerals.IMineral {
+	i, err := minerals.NewDrink(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]drinks.IDrink, name string, age uin
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]drinks.IDrink, 0, 4)
+	collection := make([]minerals.IMineral, 0, 4)
 
 	createInstanceInformative(&collection, "A", 1008)
 	createInstanceInformative(&collection, "B", 2010)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := drinks.CalculateAgeSum(collection)
-	avg, err := drinks.CalculateAgeAvg(collection)
+	sum := minerals.CalculateAgeSum(collection)
+	avg, err := minerals.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := drinks.CalculateAgeAvg([]drinks.IDrink{}); err != nil {
+	if avg, err := minerals.CalculateAgeAvg([]minerals.IMineral{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = drinks.TryAddUniqueInstance(
+	success = minerals.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = drinks.TryAddUniqueInstance(
+	success = minerals.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2010))
 

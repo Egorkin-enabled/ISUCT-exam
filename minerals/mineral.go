@@ -1,6 +1,6 @@
-package drinks
+package minerals
 
-// Объявление структуры 'Напиток'
+// Объявление структуры 'Минерал'
 
 import "fmt"
 
@@ -16,7 +16,7 @@ const (
 
 // Структура для записи.
 // Структура закрытая.
-type drink struct {
+type mineral struct {
 	name string
 	age  uint32
 	kind string
@@ -24,7 +24,7 @@ type drink struct {
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IDrink interface {
+type IMineral interface {
 	// Геттеры
 	GetKind() string
 	GetName() string
@@ -36,9 +36,9 @@ type IDrink interface {
 }
 
 // Реализация конструктора
-func NewDrink(name string, age uint32) (IDrink, error) {
+func NewDrink(name string, age uint32) (IMineral, error) {
 	// Создаём пустой экземпляр.
-	instance := drink{}
+	instance := mineral{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,28 +55,28 @@ func NewDrink(name string, age uint32) (IDrink, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance drink) GetKind() string {
+func (instance mineral) GetKind() string {
 	return instance.kind
 }
 
-func (instance drink) GetName() string {
+func (instance mineral) GetName() string {
 	return instance.name
 }
 
-func (instance drink) GetAge() uint32 {
+func (instance mineral) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *drink) SetName(name string) error {
+func (instance *mineral) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.kind = "Water"
+		instance.kind = "Kind-A"
 	case "B":
-		instance.kind = "Soda"
+		instance.kind = "B-kind"
 	case "C":
-		instance.kind = "Alcahol"
+		instance.kind = "ki-C-nd"
 	default:
 		instance.kind = "Unknown"
 	}
@@ -86,7 +86,7 @@ func (instance *drink) SetName(name string) error {
 	return nil
 }
 
-func (instance *drink) SetAge(value uint32) error {
+func (instance *mineral) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
