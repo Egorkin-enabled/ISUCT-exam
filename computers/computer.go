@@ -1,6 +1,6 @@
-package airplanes
+package computers
 
-// Объявление структуры 'Самолёт'
+// Объявление структуры 'Компьютер'
 
 import "fmt"
 
@@ -10,13 +10,13 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1900
+	minValue uint32 = 1990
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type airplane struct {
+type computer struct {
 	model string
 	age   uint32
 	kind  string
@@ -24,7 +24,7 @@ type airplane struct {
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IAirplane interface {
+type IComputer interface {
 	// Геттеры
 	GetKind() string
 	GetModel() string
@@ -36,9 +36,9 @@ type IAirplane interface {
 }
 
 // Реализация конструктора
-func NewAirplane(model string, age uint32) (IAirplane, error) {
+func NewComputer(model string, age uint32) (IComputer, error) {
 	// Создаём пустой экземпляр.
-	instance := airplane{}
+	instance := computer{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetModel(model); error != nil {
@@ -55,30 +55,30 @@ func NewAirplane(model string, age uint32) (IAirplane, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance airplane) GetKind() string {
+func (instance computer) GetKind() string {
 	return instance.kind
 }
 
-func (instance airplane) GetModel() string {
+func (instance computer) GetModel() string {
 	return instance.model
 }
 
-func (instance airplane) GetAge() uint32 {
+func (instance computer) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *airplane) SetModel(name string) error {
+func (instance *computer) SetModel(name string) error {
 	instance.model = name
 
 	switch name {
 	case "A":
-		instance.kind = "Kind-A"
+		instance.kind = "x86"
 	case "B":
-		instance.kind = "B-kind"
+		instance.kind = "amd64"
 	case "C":
-		instance.kind = "Ki-C-nd"
+		instance.kind = "ARM"
 	default:
-		instance.kind = "Unknown"
+		instance.kind = "Chinese"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +86,7 @@ func (instance *airplane) SetModel(name string) error {
 	return nil
 }
 
-func (instance *airplane) SetAge(value uint32) error {
+func (instance *computer) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

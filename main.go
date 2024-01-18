@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_17/airplanes"
+	"Exam.isuct/case_18/computers"
 )
 
-func printStats(collection []airplanes.IAirplane) {
+func printStats(collection []computers.IComputer) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
@@ -22,8 +22,8 @@ func printStats(collection []airplanes.IAirplane) {
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]airplanes.IAirplane, name string, age uint32) airplanes.IAirplane {
-	i, err := airplanes.NewAirplane(name, age)
+func createInstanceInformative(collection *[]computers.IComputer, name string, age uint32) computers.IComputer {
+	i, err := computers.NewComputer(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]airplanes.IAirplane, name string, a
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]airplanes.IAirplane, 0, 4)
+	collection := make([]computers.IComputer, 0, 4)
 
 	createInstanceInformative(&collection, "A", 2008)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := airplanes.CalculateAgeSum(collection)
-	avg, err := airplanes.CalculateAgeAvg(collection)
+	sum := computers.CalculateAgeSum(collection)
+	avg, err := computers.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := airplanes.CalculateAgeAvg([]airplanes.IAirplane{}); err != nil {
+	if avg, err := computers.CalculateAgeAvg([]computers.IComputer{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = airplanes.TryAddUniqueInstance(
+	success = computers.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = airplanes.TryAddUniqueInstance(
+	success = computers.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 
