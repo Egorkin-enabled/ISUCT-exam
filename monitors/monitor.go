@@ -36,7 +36,7 @@ type IMonitor interface {
 }
 
 // Реализация конструктора
-func NewComputer(model string, age uint32) (IMonitor, error) {
+func NewMonitor(model string, age uint32) (IMonitor, error) {
 	// Создаём пустой экземпляр.
 	instance := monitor{}
 
