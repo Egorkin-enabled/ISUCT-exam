@@ -1,4 +1,4 @@
-package monitors
+package keyboards
 
 // Объявление структуры 'Монитор'
 
@@ -10,13 +10,13 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 2000
+	minValue uint32 = 1990
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type monitor struct {
+type keyboard struct {
 	model      string
 	age        uint32
 	screenSize string
@@ -24,7 +24,7 @@ type monitor struct {
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IMonitor interface {
+type IKeyboard interface {
 	// Геттеры
 	GetScreenSize() string
 	GetModel() string
@@ -36,9 +36,9 @@ type IMonitor interface {
 }
 
 // Реализация конструктора
-func NewComputer(model string, age uint32) (IMonitor, error) {
+func NewKeyboard(model string, age uint32) (IKeyboard, error) {
 	// Создаём пустой экземпляр.
-	instance := monitor{}
+	instance := keyboard{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetModel(model); error != nil {
@@ -55,28 +55,28 @@ func NewComputer(model string, age uint32) (IMonitor, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance monitor) GetScreenSize() string {
+func (instance keyboard) GetScreenSize() string {
 	return instance.screenSize
 }
 
-func (instance monitor) GetModel() string {
+func (instance keyboard) GetModel() string {
 	return instance.model
 }
 
-func (instance monitor) GetAge() uint32 {
+func (instance keyboard) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *monitor) SetModel(name string) error {
+func (instance *keyboard) SetModel(name string) error {
 	instance.model = name
 
 	switch name {
 	case "A":
-		instance.screenSize = "1920x1080"
+		instance.screenSize = "192x108 cm"
 	case "B":
-		instance.screenSize = "640x480"
+		instance.screenSize = "640x480 cm"
 	case "C":
-		instance.screenSize = "256x176"
+		instance.screenSize = "256x176 cm"
 	default:
 		instance.screenSize = "Unknown"
 	}
@@ -86,7 +86,7 @@ func (instance *monitor) SetModel(name string) error {
 	return nil
 }
 
-func (instance *monitor) SetAge(value uint32) error {
+func (instance *keyboard) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

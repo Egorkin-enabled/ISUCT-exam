@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_19/monitors"
+	"Exam.isuct/case_24/keyboards"
 )
 
-func printStats(collection []monitors.IMonitor) {
+func printStats(collection []keyboards.IKeyboard) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
@@ -22,8 +22,8 @@ func printStats(collection []monitors.IMonitor) {
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]monitors.IMonitor, name string, age uint32) monitors.IMonitor {
-	i, err := monitors.NewComputer(name, age)
+func createInstanceInformative(collection *[]keyboards.IKeyboard, name string, age uint32) keyboards.IKeyboard {
+	i, err := keyboards.NewKeyboard(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]monitors.IMonitor, name string, age
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]monitors.IMonitor, 0, 4)
+	collection := make([]keyboards.IKeyboard, 0, 4)
 
 	createInstanceInformative(&collection, "A", 2008)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := monitors.CalculateAgeSum(collection)
-	avg, err := monitors.CalculateAgeAvg(collection)
+	sum := keyboards.CalculateAgeSum(collection)
+	avg, err := keyboards.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := monitors.CalculateAgeAvg([]monitors.IMonitor{}); err != nil {
+	if avg, err := keyboards.CalculateAgeAvg([]keyboards.IKeyboard{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = monitors.TryAddUniqueInstance(
+	success = keyboards.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = monitors.TryAddUniqueInstance(
+	success = keyboards.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 
