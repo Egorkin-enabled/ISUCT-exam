@@ -22,11 +22,11 @@ func printStats(collection []computers.IComputer) {
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]computers.IComputer, name string, age uint32) computers.IComputer {
-	i, err := computers.NewComputer(name, age)
+func createInstanceInformative(collection *[]computers.IComputer, model string, age uint32) computers.IComputer {
+	i, err := computers.NewComputer(model, age)
 
 	if err != nil {
-		fmt.Printf("'%v' error: %v\n", name, err)
+		fmt.Printf("'%v' error: %v\n", model, err)
 		return nil
 	}
 
