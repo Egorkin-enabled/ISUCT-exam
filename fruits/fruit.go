@@ -1,6 +1,6 @@
-package cities
+package fruits
 
-// Объявление структуры 'Город'
+// Объявление структуры 'Фрукт'
 
 import "fmt"
 
@@ -16,17 +16,17 @@ const (
 
 // Структура для записи.
 // Структура закрытая.
-type city struct {
-	name    string
-	age     uint32
-	country string
+type fruit struct {
+	name  string
+	age   uint32
+	color string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type ICity interface {
+type IFruit interface {
 	// Геттеры
-	GetCountry() string
+	GetColor() string
 	GetName() string
 	GetAge() uint32
 
@@ -36,9 +36,9 @@ type ICity interface {
 }
 
 // Реализация конструктора
-func NewCity(name string, age uint32) (ICity, error) {
+func NewFruit(name string, age uint32) (IFruit, error) {
 	// Создаём пустой экземпляр.
-	instance := city{}
+	instance := fruit{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,30 +55,30 @@ func NewCity(name string, age uint32) (ICity, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance city) GetCountry() string {
-	return instance.country
+func (instance fruit) GetColor() string {
+	return instance.color
 }
 
-func (instance city) GetName() string {
+func (instance fruit) GetName() string {
 	return instance.name
 }
 
-func (instance city) GetAge() uint32 {
+func (instance fruit) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *city) SetName(name string) error {
+func (instance *fruit) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.country = "Russia"
+		instance.color = "Red"
 	case "B":
-		instance.country = "China"
+		instance.color = "Orange"
 	case "C":
-		instance.country = "UK"
+		instance.color = "Yellow"
 	default:
-		instance.country = "Unknown"
+		instance.color = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +86,7 @@ func (instance *city) SetName(name string) error {
 	return nil
 }
 
-func (instance *city) SetAge(value uint32) error {
+func (instance *fruit) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
