@@ -16,7 +16,7 @@ const (
 
 // Структура для записи.
 // Структура закрытая.
-type film struct {
+type product struct {
 	name  string
 	count uint32
 	price uint32
@@ -38,7 +38,7 @@ type IProduct interface {
 // Реализация конструктора
 func NewProduct(name string, value uint32) (IProduct, error) {
 	// Создаём пустой экземпляр.
-	instance := film{}
+	instance := product{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,19 +55,19 @@ func NewProduct(name string, value uint32) (IProduct, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance film) GetPrice() uint32 {
+func (instance product) GetPrice() uint32 {
 	return instance.price
 }
 
-func (instance film) GetName() string {
+func (instance product) GetName() string {
 	return instance.name
 }
 
-func (instance film) GetCount() uint32 {
+func (instance product) GetCount() uint32 {
 	return instance.count
 }
 
-func (instance *film) SetName(name string) error {
+func (instance *product) SetName(name string) error {
 	instance.name = name
 
 	switch name {
@@ -84,7 +84,7 @@ func (instance *film) SetName(name string) error {
 	return nil
 }
 
-func (instance *film) SetCount(value uint32) error {
+func (instance *product) SetCount(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
