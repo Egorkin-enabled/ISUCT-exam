@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_9/games"
+	"Exam.isuct/case_10/albums"
 )
 
-func printStats(collection []games.IGame) {
+func printStats(collection []albums.IAlbum) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Name", "Age", "Genere")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Artist")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetGenere())
+		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetArtist())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]games.IGame, name string, age uint32) games.IGame {
-	i, err := games.NewGame(name, age)
+func createInstanceInformative(collection *[]albums.IAlbum, name string, age uint32) albums.IAlbum {
+	i, err := albums.NewAlbum(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]games.IGame, name string, age uint3
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]games.IGame, 0, 4)
+	collection := make([]albums.IAlbum, 0, 4)
 
 	createInstanceInformative(&collection, "A", 1980)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := games.CalculateAgeSum(collection)
-	avg, err := games.CalculateAgeAvg(collection)
+	sum := albums.CalculateAgeSum(collection)
+	avg, err := albums.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := games.CalculateAgeAvg([]games.IGame{}); err != nil {
+	if avg, err := albums.CalculateAgeAvg([]albums.IAlbum{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = games.TryAddUniqueInstance(
+	success = albums.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 1980))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = games.TryAddUniqueInstance(
+	success = albums.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 

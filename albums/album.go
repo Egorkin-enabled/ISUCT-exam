@@ -1,6 +1,6 @@
-package games
+package albums
 
-// Объявление структуры 'Игра'
+// Объявление структуры 'Альбом'
 
 import "fmt"
 
@@ -10,23 +10,23 @@ import "fmt"
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1980
+	minValue uint32 = 1900
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type game struct {
+type album struct {
 	name   string
 	age    uint32
-	genere string
+	artist string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IGame interface {
+type IAlbum interface {
 	// Геттеры
-	GetGenere() string
+	GetArtist() string
 	GetName() string
 	GetAge() uint32
 
@@ -36,9 +36,9 @@ type IGame interface {
 }
 
 // Реализация конструктора
-func NewGame(name string, age uint32) (IGame, error) {
+func NewAlbum(name string, age uint32) (IAlbum, error) {
 	// Создаём пустой экземпляр.
-	instance := game{}
+	instance := album{}
 
 	// Устанавливаем поля с проверками на ошибки
 	if error := instance.SetName(name); error != nil {
@@ -55,28 +55,28 @@ func NewGame(name string, age uint32) (IGame, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance game) GetGenere() string {
-	return instance.genere
+func (instance album) GetArtist() string {
+	return instance.artist
 }
 
-func (instance game) GetName() string {
+func (instance album) GetName() string {
 	return instance.name
 }
 
-func (instance game) GetAge() uint32 {
+func (instance album) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *game) SetName(name string) error {
+func (instance *album) SetName(name string) error {
 	instance.name = name
 
 	switch name {
 	case "A":
-		instance.genere = "Genere A"
+		instance.artist = "Artist A"
 	case "B":
-		instance.genere = "Ganere B"
+		instance.artist = "Artist B"
 	default:
-		instance.genere = "Unknown"
+		instance.artist = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -84,7 +84,7 @@ func (instance *game) SetName(name string) error {
 	return nil
 }
 
-func (instance *game) SetAge(value uint32) error {
+func (instance *album) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}
