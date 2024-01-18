@@ -23,7 +23,7 @@ func printStats(collection []books.IBook) {
 }
 
 func createInstanceInformative(collection *[]books.IBook, name string, weight uint32) books.IBook {
-	i, err := books.NewEntry(name, weight)
+	i, err := books.NewBook(name, weight)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := books.CalculateValueSum(collection)
-	avg, err := books.CalculateValueAvg(collection)
+	sum := books.CalculateAgeSum(collection)
+	avg, err := books.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := books.CalculateValueAvg([]books.IBook{}); err != nil {
+	if avg, err := books.CalculateAgeAvg([]books.IBook{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)

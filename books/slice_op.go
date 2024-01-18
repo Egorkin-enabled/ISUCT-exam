@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateValueSum(collection []IBook) uint32 {
+func CalculateAgeSum(collection []IBook) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,12 +28,12 @@ func CalculateValueSum(collection []IBook) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateValueAvg(collection []IBook) (float64, error) {
+func CalculateAgeAvg(collection []IBook) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
 
-	avg := float64(CalculateValueSum(collection)) / float64(len(collection))
+	avg := float64(CalculateAgeSum(collection)) / float64(len(collection))
 	return avg, nil
 }
 

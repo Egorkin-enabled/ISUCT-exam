@@ -36,7 +36,7 @@ type IBook interface {
 }
 
 // Реализация конструктора
-func NewEntry(name string, value uint32) (IBook, error) {
+func NewBook(name string, value uint32) (IBook, error) {
 	// Создаём пустой экземпляр.
 	instance := book{}
 
