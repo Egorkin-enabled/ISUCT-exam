@@ -1,4 +1,4 @@
-package albums
+package plants
 
 // Опреации над срезами
 

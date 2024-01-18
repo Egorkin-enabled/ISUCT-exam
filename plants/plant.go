@@ -1,4 +1,4 @@
-package albums
+package plants
 
 // Объявление структуры 'Растение'
 
