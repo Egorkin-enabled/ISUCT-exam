@@ -44,7 +44,7 @@ type IFurnishing interface {
 }
 
 // Реализация конструктора
-func NewComputer(model string, age uint32) (IFurnishing, error) {
+func NewFurnishing(model string, age uint32) (IFurnishing, error) {
 	// Создаём пустой экземпляр.
 	instance := furnishing{}
 

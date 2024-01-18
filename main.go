@@ -23,7 +23,7 @@ func printStats(collection []furnishings.IFurnishing) {
 }
 
 func createInstanceInformative(collection *[]furnishings.IFurnishing, name string, age uint32) furnishings.IFurnishing {
-	i, err := furnishings.NewComputer(name, age)
+	i, err := furnishings.NewFurnishing(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
