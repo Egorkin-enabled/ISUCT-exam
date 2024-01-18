@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_12/phones"
+	"Exam.isuct/case_13/cities"
 )
 
-func printStats(collection []phones.IPhone) {
+func printStats(collection []cities.ICity) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Model", "Age", "Manufact.")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Country")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetManufacturer())
+		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetCountry())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]phones.IPhone, name string, age uint32) phones.IPhone {
-	i, err := phones.NewPhone(name, age)
+func createInstanceInformative(collection *[]cities.ICity, name string, age uint32) cities.ICity {
+	i, err := cities.NewCity(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,18 +40,18 @@ func createInstanceInformative(collection *[]phones.IPhone, name string, age uin
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]phones.IPhone, 0, 4)
+	collection := make([]cities.ICity, 0, 4)
 
-	createInstanceInformative(&collection, "A", 2008)
-	createInstanceInformative(&collection, "B", 2020)
-	createInstanceInformative(&collection, "D", 1600)
-	createInstanceInformative(&collection, "C", 2019)
+	createInstanceInformative(&collection, "A", 1008)
+	createInstanceInformative(&collection, "B", 2010)
+	createInstanceInformative(&collection, "C", 1819)
+	createInstanceInformative(&collection, "D", 900)
 	createInstanceInformative(&collection, "E", 2200)
 
 	printStats(collection)
 
-	sum := phones.CalculateAgeSum(collection)
-	avg, err := phones.CalculateAgeAvg(collection)
+	sum := cities.CalculateAgeSum(collection)
+	avg, err := cities.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := phones.CalculateAgeAvg([]phones.IPhone{}); err != nil {
+	if avg, err := cities.CalculateAgeAvg([]cities.ICity{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = phones.TryAddUniqueInstance(
+	success = cities.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,9 +83,9 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = phones.TryAddUniqueInstance(
+	success = cities.TryAddUniqueInstance(
 		&collection,
-		createInstanceInformative(nil, "B", 2020))
+		createInstanceInformative(nil, "B", 2010))
 
 	if success {
 		fmt.Print("Unexcepted success.\n\n")
