@@ -4,26 +4,26 @@ import (
 	"fmt"
 	"strings"
 
-	"Exam.isuct/case_18/computers"
+	"Exam.isuct/case_21/furnishings"
 )
 
-func printStats(collection []computers.IComputer) {
+func printStats(collection []furnishings.IFurnishing) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Model", "Age", "Kind")
+	head := fmt.Sprintf(row, "#", "Material", "Age", "Kind")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetKind())
+		fmt.Printf(row, i, v.GetMaterial(), v.GetAge(), v.GetKind())
 	}
 
 	fmt.Println()
 }
 
-func createInstanceInformative(collection *[]computers.IComputer, name string, age uint32) computers.IComputer {
-	i, err := computers.NewComputer(name, age)
+func createInstanceInformative(collection *[]furnishings.IFurnishing, name string, age uint32) furnishings.IFurnishing {
+	i, err := furnishings.NewComputer(name, age)
 
 	if err != nil {
 		fmt.Printf("'%v' error: %v\n", name, err)
@@ -40,7 +40,7 @@ func createInstanceInformative(collection *[]computers.IComputer, name string, a
 func main() {
 
 	fmt.Println("Creating instances...")
-	collection := make([]computers.IComputer, 0, 4)
+	collection := make([]furnishings.IFurnishing, 0, 4)
 
 	createInstanceInformative(&collection, "A", 2008)
 	createInstanceInformative(&collection, "B", 2020)
@@ -50,8 +50,8 @@ func main() {
 
 	printStats(collection)
 
-	sum := computers.CalculateAgeSum(collection)
-	avg, err := computers.CalculateAgeAvg(collection)
+	sum := furnishings.CalculateAgeSum(collection)
+	avg, err := furnishings.CalculateAgeAvg(collection)
 
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if avg, err := computers.CalculateAgeAvg([]computers.IComputer{}); err != nil {
+	if avg, err := furnishings.CalculateAgeAvg([]furnishings.IFurnishing{}); err != nil {
 		fmt.Printf("Successful error: %v\n", err)
 	} else {
 		fmt.Printf("Unexcepted success: %v\n", avg)
@@ -72,7 +72,7 @@ func main() {
 	var success bool
 
 	fmt.Print("Trying to add unique object:\n    ")
-	success = computers.TryAddUniqueInstance(
+	success = furnishings.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "D", 2001))
 
@@ -83,7 +83,7 @@ func main() {
 	}
 
 	fmt.Print("Trying to add non-unique object:\n    ")
-	success = computers.TryAddUniqueInstance(
+	success = furnishings.TryAddUniqueInstance(
 		&collection,
 		createInstanceInformative(nil, "B", 2020))
 

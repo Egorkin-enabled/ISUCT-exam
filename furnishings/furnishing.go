@@ -1,47 +1,55 @@
-package computers
+package furnishings
 
-// Объявление структуры 'Компьютер'
+// Объявление структуры 'Мебель'
 
 import "fmt"
 
 // Константы для значения
 
+type FurnishingKind uint8
+
+const (
+	Reliable FurnishingKind = iota
+	NonReliable
+	Unknown
+)
+
 // Человеческое название
 const valueHumanName = "Age"
 
 const (
-	minValue uint32 = 1990
+	minValue uint32 = 1800
 	maxValue uint32 = 2024
 )
 
 // Структура для записи.
 // Структура закрытая.
-type computer struct {
-	model string
-	age   uint32
-	kind  string
+type furnishing struct {
+	material string
+	age      uint32
+	kind     FurnishingKind
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
-type IComputer interface {
+type IFurnishing interface {
 	// Геттеры
-	GetKind() string
-	GetModel() string
+	GetKind() FurnishingKind
+	GetMaterial() string
 	GetAge() uint32
 
 	// Сеттеры
-	SetModel(string) error
+	SetMaterial(string) error
 	SetAge(uint32) error
 }
 
 // Реализация конструктора
-func NewComputer(model string, age uint32) (IComputer, error) {
+func NewComputer(model string, age uint32) (IFurnishing, error) {
 	// Создаём пустой экземпляр.
-	instance := computer{}
+	instance := furnishing{}
 
 	// Устанавливаем поля с проверками на ошибки
-	if error := instance.SetModel(model); error != nil {
+	if error := instance.SetMaterial(model); error != nil {
 		return nil, error
 	}
 
@@ -55,30 +63,30 @@ func NewComputer(model string, age uint32) (IComputer, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance computer) GetKind() string {
+func (instance furnishing) GetKind() FurnishingKind {
 	return instance.kind
 }
 
-func (instance computer) GetModel() string {
-	return instance.model
+func (instance furnishing) GetMaterial() string {
+	return instance.material
 }
 
-func (instance computer) GetAge() uint32 {
+func (instance furnishing) GetAge() uint32 {
 	return instance.age
 }
 
-func (instance *computer) SetModel(name string) error {
-	instance.model = name
+func (instance *furnishing) SetMaterial(name string) error {
+	instance.material = name
 
 	switch name {
 	case "A":
-		instance.kind = "x86"
+		instance.kind = Reliable
 	case "B":
-		instance.kind = "amd64"
+		instance.kind = NonReliable
 	case "C":
-		instance.kind = "ARM"
+		instance.kind = NonReliable
 	default:
-		instance.kind = "Chinese"
+		instance.kind = Unknown
 	}
 
 	// В данной реализации ошибок быть не может,
@@ -86,7 +94,7 @@ func (instance *computer) SetModel(name string) error {
 	return nil
 }
 
-func (instance *computer) SetAge(value uint32) error {
+func (instance *furnishing) SetAge(value uint32) error {
 	if value < minValue || value > maxValue {
 		return fmt.Errorf("Value '%v' out of bounds [%v, %v]: %v", valueHumanName, minValue, maxValue, value)
 	}

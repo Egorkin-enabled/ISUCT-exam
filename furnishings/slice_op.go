@@ -1,4 +1,4 @@
-package computers
+package furnishings
 
 // Опреации над срезами
 
@@ -18,7 +18,7 @@ func (error stringError) Error() string {
 }
 
 // Вычисление суммы.
-func CalculateAgeSum(collection []IComputer) uint32 {
+func CalculateAgeSum(collection []IFurnishing) uint32 {
 	var result uint32 = 0
 	for _, v := range collection {
 		result += v.GetAge()
@@ -28,7 +28,7 @@ func CalculateAgeSum(collection []IComputer) uint32 {
 }
 
 // Вычисление среднего.
-func CalculateAgeAvg(collection []IComputer) (float64, error) {
+func CalculateAgeAvg(collection []IFurnishing) (float64, error) {
 	if len(collection) == 0 {
 		return 0.0, AvgZeroCollectionError
 	}
@@ -38,12 +38,12 @@ func CalculateAgeAvg(collection []IComputer) (float64, error) {
 }
 
 // Добавление уникальной структуры в срез
-func TryAddUniqueInstance(collection *[]IComputer, instance IComputer) bool {
+func TryAddUniqueInstance(collection *[]IFurnishing, instance IFurnishing) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
 		// Проверку country упкскаем, т.к. country зависит от проверяемых значений
-		if v.GetModel() == instance.GetModel() && v.GetAge() == instance.GetAge() {
+		if v.GetMaterial() == instance.GetMaterial() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
 		}
