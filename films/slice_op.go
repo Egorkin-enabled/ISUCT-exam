@@ -42,7 +42,7 @@ func TryAddUniqueInstance(collection *[]IFilm, instance IFilm) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
-		// Проверку kind упкскаем, т.к. kind зависит от проверяемых значений
+		// Проверку director упкскаем, т.к. director зависит от проверяемых значений
 		if v.GetName() == instance.GetName() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
