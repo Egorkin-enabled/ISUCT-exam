@@ -42,7 +42,7 @@ func TryAddUniqueInstance(collection *[]IBook, instance IBook) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
-		// Проверку kind упкскаем, т.к. kind зависит от проверяемых значений
+		// Проверку author упкскаем, т.к. author зависит от проверяемых значений
 		if v.GetName() == instance.GetName() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
