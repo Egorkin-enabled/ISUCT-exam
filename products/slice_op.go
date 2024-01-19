@@ -42,7 +42,7 @@ func TryAddUniqueInstance(collection *[]IProduct, instance IProduct) bool {
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
-		// Проверку kind упкскаем, т.к. kind зависит от проверяемых значений
+		// Проверку price упкскаем, т.к. price зависит от проверяемых значений
 		if v.GetName() == instance.GetName() && v.GetCount() == instance.GetCount() {
 			// Нашли такую-же структуру - выходим.
 			return false
