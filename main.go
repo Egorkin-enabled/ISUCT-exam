@@ -2,64 +2,95 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"Exam.isuct/case_1/humans"
 )
 
-func tryInitialize(people *[]humans.IHuman, age int32, name string) bool {
-	human, err := humans.NewHuman(age, name)
+func printStats(collection []humans.IHuman) {
+	const row = "| %5v | %10v | %10v | %10v |\n"
 
-	if err != nil {
-		fmt.Printf("'%v' error! Message:", name)
-		fmt.Println(err)
-		return false
+	fmt.Println("Stats:")
+	head := fmt.Sprintf(row, "#", "Name", "Age", "Status")
+	fmt.Printf(head)
+	fmt.Println(strings.Repeat("-", len(head)-1))
+
+	for i, v := range collection {
+		fmt.Printf(row, i, v.GetName(), v.GetAge(), v.GetStatus())
 	}
 
-	*people = append(*people, human)
-	return true
+	fmt.Println()
 }
 
-func printStats(people []humans.IHuman) {
-	fmt.Println("People stats:")
-	for _, s := range people {
-		fmt.Printf("name: %v; age: %v; status: %v\n", s.GetAge(), s.GetName(), s.GetStatus())
+func createInstanceInformative(collection *[]humans.IHuman, name string, weight uint32) humans.IHuman {
+	i, err := humans.NewHuman(name, weight)
+
+	if err != nil {
+		fmt.Printf("'%v' error: %v\n", name, err)
+		return nil
 	}
+
+	if collection != nil {
+		*collection = append(*collection, i)
+	}
+
+	return i
 }
 
 func main() {
-	people := make([]humans.IHuman, 0, 4)
 
-	tryInitialize(&people, 10, "Jhon")
-	tryInitialize(&people, 32, "Smith")
-	tryInitialize(&people, 120, "Salamon")
-	tryInitialize(&people, 3000, "Hatabich")
+	fmt.Println("Creating instances...")
+	collection := make([]humans.IHuman, 0, 4)
 
-	printStats(people)
+	createInstanceInformative(&collection, "Peter", 10)
+	createInstanceInformative(&collection, "Andrey", 40)
+	createInstanceInformative(&collection, "Stefan", 60)
+	createInstanceInformative(&collection, "Hotabich", 3000)
 
-	sum := humans.CalculateAgeSum(people)
-	fmt.Printf("Age sum is: %v\n", sum)
+	printStats(collection)
 
-	fmt.Println("TryAddUnique - case 'failure':")
+	sum := humans.CalculateAgeSum(collection)
+	avg, err := humans.CalculateAgeAvg(collection)
 
-	if human, err := humans.NewHuman(32, "Smith"); err != nil {
+	if err != nil {
 		panic(err)
-	} else if humans.TryAddUnique(&people, human) {
-		fmt.Println("Unexcepted success.")
-	} else {
-		fmt.Println("Failure.")
 	}
 
-	printStats(people)
+	fmt.Printf("Weight:\n    SUM: %8v;\n    AVG: %8.2f;\n\n", sum, avg)
 
-	fmt.Println("TryAddUnique - case 'success':")
+	fmt.Print("Trying to AVG with an empty list:\n    ")
 
-	if human, err := humans.NewHuman(12, "Stefan"); err != nil {
-		panic(err)
-	} else if humans.TryAddUnique(&people, human) {
-		fmt.Println("Success.")
+	if avg, err := humans.CalculateAgeAvg([]humans.IHuman{}); err != nil {
+		fmt.Printf("Successful error: %v\n", err)
 	} else {
-		fmt.Println("Unexcepted failure.")
+		fmt.Printf("Unexcepted success: %v\n", avg)
 	}
 
-	printStats(people)
+	fmt.Println()
+
+	var success bool
+
+	fmt.Print("Trying to add unique object:\n    ")
+	success = humans.TryAddUniqueInstance(
+		&collection,
+		createInstanceInformative(nil, "Jhon", 20))
+
+	if success {
+		fmt.Print("Success!\n\n")
+	} else {
+		fmt.Print("Unexcepted failure.\n\n")
+	}
+
+	fmt.Print("Trying to add non-unique object:\n    ")
+	success = humans.TryAddUniqueInstance(
+		&collection,
+		createInstanceInformative(nil, "Andrey", 40))
+
+	if success {
+		fmt.Print("Unexcepted success.\n\n")
+	} else {
+		fmt.Print("Successful failure!\n\n")
+	}
+
+	printStats(collection)
 }
