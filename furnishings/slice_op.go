@@ -42,7 +42,7 @@ func TryAddUniqueInstance(collection *[]IFurnishing, instance IFurnishing) bool 
 	for _, v := range *collection {
 		// Сравниваем значения попарно,
 		// т.к.  интерфейс - указатель и оператор == сравнивает адреса
-		// Проверку country упкскаем, т.к. country зависит от проверяемых значений
+		// Проверку kind упкскаем, т.к. kind зависит от проверяемых значений
 		if v.GetMaterial() == instance.GetMaterial() && v.GetAge() == instance.GetAge() {
 			// Нашли такую-же структуру - выходим.
 			return false
