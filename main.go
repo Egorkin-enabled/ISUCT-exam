@@ -11,12 +11,12 @@ func printStats(collection []keyboards.IKeyboard) {
 	const row = "| %5v | %10v | %10v | %10v |\n"
 
 	fmt.Println("Stats:")
-	head := fmt.Sprintf(row, "#", "Model", "Age", "Kind")
+	head := fmt.Sprintf(row, "#", "Model", "Age", "Size")
 	fmt.Printf(head)
 	fmt.Println(strings.Repeat("-", len(head)-1))
 
 	for i, v := range collection {
-		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetScreenSize())
+		fmt.Printf(row, i, v.GetModel(), v.GetAge(), v.GetSize())
 	}
 
 	fmt.Println()

@@ -17,16 +17,16 @@ const (
 // Структура для записи.
 // Структура закрытая.
 type keyboard struct {
-	model      string
-	age        uint32
-	screenSize string
+	model string
+	age   uint32
+	size  string
 }
 
 // Чтобы обеспечить доступ к структуре из другого пакета (main),
 // вводим публичный интерфейс.
 type IKeyboard interface {
 	// Геттеры
-	GetScreenSize() string
+	GetSize() string
 	GetModel() string
 	GetAge() uint32
 
@@ -55,8 +55,8 @@ func NewKeyboard(model string, age uint32) (IKeyboard, error) {
 }
 
 // Реализация геттеров/сеттеров
-func (instance keyboard) GetScreenSize() string {
-	return instance.screenSize
+func (instance keyboard) GetSize() string {
+	return instance.size
 }
 
 func (instance keyboard) GetModel() string {
@@ -72,13 +72,13 @@ func (instance *keyboard) SetModel(name string) error {
 
 	switch name {
 	case "A":
-		instance.screenSize = "192x108 cm"
+		instance.size = "192x108 cm"
 	case "B":
-		instance.screenSize = "640x480 cm"
+		instance.size = "640x480 cm"
 	case "C":
-		instance.screenSize = "256x176 cm"
+		instance.size = "256x176 cm"
 	default:
-		instance.screenSize = "Unknown"
+		instance.size = "Unknown"
 	}
 
 	// В данной реализации ошибок быть не может,
